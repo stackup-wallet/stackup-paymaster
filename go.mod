@@ -12,7 +12,7 @@ require (
 	github.com/go-playground/validator/v10 v10.19.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/rs/zerolog v1.32.0
-	github.com/spf13/cobra v1.6.1
+	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
 	github.com/stackup-wallet/stackup-bundler v0.6.44
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.42.0
@@ -54,7 +54,7 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.7.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/holiman/uint256 v1.2.4 // indirect
-	github.com/inconshreveable/mousetrap v1.0.1 // indirect
+	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.7 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
