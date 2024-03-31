@@ -1,8 +1,8 @@
 # stackup-paymaster
 
-A JSON-RPC client for serving [ERC-4337 paymaster requests](https://docs.stackup.sh/docs/paymaster-api-rpc-methods) based on the Stackup variant `pm` namespace.
+A JSON-RPC client for serving [ERC-4337 verifying paymaster requests](https://docs.stackup.sh/docs/paymaster-api-rpc-methods).
 
-> **⚠️ This software is still in early development as we migrate to open source our entire paymaster API. It is not recommended for business critical systems at this point.**
+> **⚠️ This software is still in early development. It is not recommended for business critical systems at this point.**
 
 # Running an instance
 
@@ -12,7 +12,7 @@ Documentation coming soon...
 
 # Contributing
 
-Steps for setting up a local dev environment for contributing to the Paymaster API.
+Steps for setting up a local dev environment for contributing to the Paymaster.
 
 ## Prerequisites
 
@@ -28,9 +28,9 @@ Steps for setting up a local dev environment for contributing to the Paymaster A
 make install-dev
 ```
 
-## Run paymaster API
+## Run the paymaster service
 
-Start a local paymaster API instance:
+Start a local paymaster instance:
 
 ```bash
 make dev-run
