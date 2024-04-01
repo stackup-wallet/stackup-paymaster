@@ -2,7 +2,7 @@
 
 A JSON-RPC client for serving [ERC-4337 verifying paymaster requests](https://docs.stackup.sh/docs/paymaster-api-rpc-methods).
 
-> **⚠️ This software is still in early development. It is not recommended for business critical systems at this point.**
+> **⚠️ This software is still in early development. It is not yet recommended for business critical systems.**
 
 # Running an instance
 
