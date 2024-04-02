@@ -1,6 +1,6 @@
 # stackup-paymaster
 
-A JSON-RPC client for serving [ERC-4337 verifying paymaster requests](https://docs.stackup.sh/docs/paymaster-api-rpc-methods).
+A JSON-RPC server for processing [ERC-4337 paymaster requests](https://docs.stackup.sh/docs/paymaster-api-rpc-methods).
 
 > **⚠️ This software is still in early development. It is not yet recommended for business critical systems.**
 
