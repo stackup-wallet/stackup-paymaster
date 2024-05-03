@@ -23,7 +23,8 @@ type Values struct {
 	OTELInsecureMode     bool
 
 	// Rollup related variables.
-	IsOpStackNetwork bool
+	IsOpStackNetwork  bool
+	IsArbStackNetwork bool
 
 	// Undocumented variables.
 	GinMode string
@@ -99,6 +100,7 @@ func GetValues() *Values {
 	_ = viper.BindEnv("erc4337_paymaster_otel_collector_url")
 	_ = viper.BindEnv("erc4337_paymaster_otel_insecure_mode")
 	_ = viper.BindEnv("erc4337_paymaster_is_op_stack_network")
+	_ = viper.BindEnv("erc4337_paymaster_is_arb_stack_network")
 	_ = viper.BindEnv("erc4337_paymaster_gin_mode")
 
 	// Validate required variables
@@ -133,6 +135,8 @@ func GetValues() *Values {
 	otelCollectorUrl := viper.GetString("erc4337_paymaster_otel_collector_url")
 	otelInsecureMode := viper.GetBool("erc4337_paymaster_otel_insecure_mode")
 	isOpStackNetwork := viper.GetBool("erc4337_paymaster_is_op_stack_network")
+	isArbStackNetwork := viper.GetBool("erc4337_paymaster_is_arb_stack_network")
+
 	ginMode := viper.GetString("erc4337_paymaster_gin_mode")
 	return &Values{
 		Port:                   port,
@@ -145,6 +149,7 @@ func GetValues() *Values {
 		OTELCollectorUrl:       otelCollectorUrl,
 		OTELInsecureMode:       otelInsecureMode,
 		IsOpStackNetwork:       isOpStackNetwork,
+		IsArbStackNetwork:      isArbStackNetwork,
 		GinMode:                ginMode,
 	}
 }
