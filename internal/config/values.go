@@ -26,6 +26,9 @@ type Values struct {
 	IsOpStackNetwork  bool
 	IsArbStackNetwork bool
 
+	// Native tracer.
+	PaymasterNativeTracer bool
+
 	// Undocumented variables.
 	GinMode string
 }
@@ -74,7 +77,9 @@ func GetValues() *Values {
 	viper.SetDefault("erc4337_paymaster_default_entrypoint", "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789")
 	viper.SetDefault("erc4337_paymaster_otel_insecure_mode", false)
 	viper.SetDefault("erc4337_paymaster_is_op_stack_network", false)
+	viper.SetDefault("erc4337_paymaster_is_arb_stack_network", false)
 	viper.SetDefault("erc4337_paymaster_gin_mode", gin.ReleaseMode)
+	viper.SetDefault("erc4337_paymaster_native_tracer", false)
 
 	// Read in from .env file if available
 	viper.SetConfigName(".env")
@@ -102,6 +107,7 @@ func GetValues() *Values {
 	_ = viper.BindEnv("erc4337_paymaster_is_op_stack_network")
 	_ = viper.BindEnv("erc4337_paymaster_is_arb_stack_network")
 	_ = viper.BindEnv("erc4337_paymaster_gin_mode")
+	_ = viper.BindEnv("erc4337_paymaster_native_tracer")
 
 	// Validate required variables
 	if variableNotSetOrIsNil("erc4337_paymaster_signing_key") {
@@ -136,6 +142,7 @@ func GetValues() *Values {
 	otelInsecureMode := viper.GetBool("erc4337_paymaster_otel_insecure_mode")
 	isOpStackNetwork := viper.GetBool("erc4337_paymaster_is_op_stack_network")
 	isArbStackNetwork := viper.GetBool("erc4337_paymaster_is_arb_stack_network")
+	paymasterNativeTracer := viper.GetBool("erc4337_paymaster_native_tracer")
 
 	ginMode := viper.GetString("erc4337_paymaster_gin_mode")
 	return &Values{
@@ -150,6 +157,7 @@ func GetValues() *Values {
 		OTELInsecureMode:       otelInsecureMode,
 		IsOpStackNetwork:       isOpStackNetwork,
 		IsArbStackNetwork:      isArbStackNetwork,
+		PaymasterNativeTracer:  paymasterNativeTracer,
 		GinMode:                ginMode,
 	}
 }

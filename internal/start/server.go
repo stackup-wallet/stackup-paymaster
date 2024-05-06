@@ -72,7 +72,8 @@ func Server() {
 		ov.SetPreVerificationGasBufferFactor(1)
 	}
 
-	c := client.New(signer, rpc, eth, chain, ov, conf.EntryPointToPaymasters, logr)
+	// pass the native tracers bool here
+	c := client.New(signer, rpc, eth, chain, ov, conf.EntryPointToPaymasters, logr, conf.PaymasterNativeTracer)
 
 	gin.SetMode(conf.GinMode)
 	r := gin.New()

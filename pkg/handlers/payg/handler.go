@@ -20,6 +20,7 @@ type Handler struct {
 	rpc          *rpc.Client
 	eth          *ethclient.Client
 	gasEstimator *estimator.GasEstimator
+	nativeTracer bool
 }
 
 func New(
@@ -28,12 +29,14 @@ func New(
 	eth *ethclient.Client,
 	chain *big.Int,
 	ov *gas.Overhead,
+	nt bool,
 ) *Handler {
 	return &Handler{
 		rpc:          rpc,
 		eth:          eth,
 		signer:       signer,
-		gasEstimator: estimator.New(signer, rpc, eth, chain, ov),
+		nativeTracer: nt,
+		gasEstimator: estimator.New(signer, rpc, eth, chain, ov, nt),
 	}
 }
 

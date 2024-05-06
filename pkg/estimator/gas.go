@@ -62,11 +62,12 @@ func updateOpPaymasterAndData(
 }
 
 type GasEstimator struct {
-	signer  *signer.EOA
-	rpc     *rpc.Client
-	eth     *ethclient.Client
-	chainID *big.Int
-	ov      *gas.Overhead
+	signer       *signer.EOA
+	rpc          *rpc.Client
+	eth          *ethclient.Client
+	chainID      *big.Int
+	ov           *gas.Overhead
+	nativeTracer bool
 }
 
 func New(
@@ -75,6 +76,7 @@ func New(
 	eth *ethclient.Client,
 	chain *big.Int,
 	ov *gas.Overhead,
+	nativeTracer bool,
 ) *GasEstimator {
 	return &GasEstimator{
 		signer:  signer,
@@ -82,6 +84,7 @@ func New(
 		eth:     eth,
 		chainID: chain,
 		ov:      ov,
+		nativeTracer: nativeTracer,
 	}
 }
 
@@ -108,36 +111,70 @@ func (g *GasEstimator) OverrideOpGasLimitsForPND(
 		return nil, err
 	}
 
-	// Run EstimateGas.
-	vgl, cgl, err := gas.EstimateGas(&gas.EstimateInput{
-		Rpc:         g.rpc,
-		EntryPoint:  ep,
-		Op:          pmOp,
-		Ov:          g.ov,
-		ChainID:     g.chainID,
-		MaxGasLimit: maxGasLimit,
-		Tracer:      "bundlerExecutorTracer",
-	})
-	if err != nil {
-		return nil, err
-	}
+	// figure out how to ovveride the estimate gas here with native or js tracer
+	if g.nativeTracer {
+		// Run EstimateGas.
+		vgl, cgl, err := gas.EstimateGas(&gas.EstimateInput{
+			Rpc:         g.rpc,
+			EntryPoint:  ep,
+			Op:          pmOp,
+			Ov:          g.ov,
+			ChainID:     g.chainID,
+			MaxGasLimit: maxGasLimit,
+			Tracer:      "bundlerExecutorTracer",
+		})
+		if err != nil {
+			return nil, err
+		}
 
-	// Update gas fields.
-	pmOp, err = updateOpPaymasterAndData(pmOp, DummyPaymasterAndDataHex)
-	if err != nil {
-		return nil, err
-	}
-	pmOp, err = updateOpVerificationGasLimit(pmOp, big.NewInt(int64(vgl)))
-	if err != nil {
-		return nil, err
-	}
-	pmOp, err = updateOpCallGasLimit(pmOp, big.NewInt(int64(cgl)))
-	if err != nil {
-		return nil, err
-	}
-	pmOp, err = updateOpPreVerificationGas(pmOp, g.ov)
-	if err != nil {
-		return nil, err
+		// Update gas fields.
+		pmOp, err = updateOpPaymasterAndData(pmOp, DummyPaymasterAndDataHex)
+		if err != nil {
+			return nil, err
+		}
+		pmOp, err = updateOpVerificationGasLimit(pmOp, big.NewInt(int64(vgl)))
+		if err != nil {
+			return nil, err
+		}
+		pmOp, err = updateOpCallGasLimit(pmOp, big.NewInt(int64(cgl)))
+		if err != nil {
+			return nil, err
+		}
+		pmOp, err = updateOpPreVerificationGas(pmOp, g.ov)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		// Run EstimateGas.
+		vgl, cgl, err := gas.EstimateGas(&gas.EstimateInput{
+			Rpc:         g.rpc,
+			EntryPoint:  ep,
+			Op:          pmOp,
+			Ov:          g.ov,
+			ChainID:     g.chainID,
+			MaxGasLimit: maxGasLimit,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		// Update gas fields.
+		pmOp, err = updateOpPaymasterAndData(pmOp, DummyPaymasterAndDataHex)
+		if err != nil {
+			return nil, err
+		}
+		pmOp, err = updateOpVerificationGasLimit(pmOp, big.NewInt(int64(vgl)))
+		if err != nil {
+			return nil, err
+		}
+		pmOp, err = updateOpCallGasLimit(pmOp, big.NewInt(int64(cgl)))
+		if err != nil {
+			return nil, err
+		}
+		pmOp, err = updateOpPreVerificationGas(pmOp, g.ov)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return pmOp, nil

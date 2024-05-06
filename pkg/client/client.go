@@ -17,13 +17,14 @@ import (
 )
 
 type Client struct {
-	rpc         *rpc.Client
-	eth         *ethclient.Client
-	chainID     *big.Int
-	ov          *gas.Overhead
-	ep2pms      map[common.Address][]common.Address
-	paygHandler *payg.Handler
-	logger      logr.Logger
+	rpc          *rpc.Client
+	eth          *ethclient.Client
+	chainID      *big.Int
+	ov           *gas.Overhead
+	ep2pms       map[common.Address][]common.Address
+	paygHandler  *payg.Handler
+	logger       logr.Logger
+	nativeTracer bool
 }
 
 func New(
@@ -34,15 +35,17 @@ func New(
 	ov *gas.Overhead,
 	ep2pms map[common.Address][]common.Address,
 	l logr.Logger,
+	nt bool,
 ) *Client {
 	return &Client{
-		rpc:         rpc,
-		eth:         eth,
-		chainID:     chain,
-		ov:          ov,
-		ep2pms:      ep2pms,
-		paygHandler: payg.New(signer, rpc, eth, chain, ov),
-		logger:      l,
+		rpc:          rpc,
+		eth:          eth,
+		chainID:      chain,
+		ov:           ov,
+		ep2pms:       ep2pms,
+		paygHandler:  payg.New(signer, rpc, eth, chain, ov, nt),
+		logger:       l,
+		nativeTracer: nt,
 	}
 }
 
