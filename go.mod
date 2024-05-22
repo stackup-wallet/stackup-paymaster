@@ -7,7 +7,7 @@ require (
 	github.com/ethereum/go-ethereum v1.13.14
 	github.com/gin-contrib/cors v1.7.1
 	github.com/gin-gonic/gin v1.9.1
-	github.com/go-logr/logr v1.4.1
+	github.com/go-logr/logr v1.4.2
 	github.com/go-logr/zerologr v1.2.3
 	github.com/go-playground/validator/v10 v10.19.0
 	github.com/mitchellh/mapstructure v1.5.0
