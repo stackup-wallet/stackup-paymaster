@@ -9,7 +9,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-logr/logr v1.4.1
 	github.com/go-logr/zerologr v1.2.3
-	github.com/go-playground/validator/v10 v10.19.0
+	github.com/go-playground/validator/v10 v10.22.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/rs/zerolog v1.32.0
 	github.com/spf13/cobra v1.8.0
